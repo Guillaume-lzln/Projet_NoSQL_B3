@@ -1,0 +1,17 @@
+{
+  "name": "marketplace-nosql",
+  "version": "1.0.0",
+  "description": "API support du projet de persistance polyglotte (PostgreSQL, MongoDB, Redis, Neo4j)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node src/seed/index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongodb": "^6.17.0",
+    "neo4j-driver": "^5.28.0",
+    "pg": "^8.16.0",
+    "redis": "^4.7.0"
+  }
+}

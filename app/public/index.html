@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panopli — High-tech, mode, maison, livres et plus</title>
+  <meta name="description" content="Panopli, la marketplace française : high-tech, informatique, mode, maison, livres, jeux et sport. Livraison offerte dès 49 €.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316181d'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='19' font-weight='bold' fill='%23fff' text-anchor='middle'%3Ep%3C/text%3E%3Ccircle cx='24' cy='22' r='3' fill='%23e8590c'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="topstrip">
+    <div class="wrap topstrip-in">
+      <span>Livraison offerte dès 49&nbsp;€ d'achat</span>
+      <span class="topstrip-sep">·</span>
+      <span>Retours gratuits sous 30&nbsp;jours</span>
+      <nav class="topstrip-links">
+        <a href="#/aide">Aide et contact</a>
+        <a href="#/vendre">Vendre sur Panopli</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="wrap header-in">
+      <a class="logo" href="#/" aria-label="Panopli, accueil">panopli<span class="logo-dot"></span></a>
+
+      <form class="search" id="search-form" role="search">
+        <input id="search-input" type="search" placeholder="Rechercher un produit, une marque…"
+               autocomplete="off" aria-label="Rechercher">
+        <button type="submit" aria-label="Lancer la recherche">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      </form>
+
+      <div class="header-actions">
+        <div class="account" id="account">
+          <button class="header-btn" id="account-btn" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.2-3.4 4-5 7.5-5s6.3 1.6 7.5 5"/></svg>
+            <span class="header-btn-txt"><small>Bonjour</small><strong id="account-name">…</strong></span>
+          </button>
+          <div class="account-menu" id="account-menu" hidden>
+            <p class="account-menu-title">Compte de démonstration</p>
+            <div id="account-list"></div>
+          </div>
+        </div>
+
+        <a class="header-btn" href="#/commandes">
+          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>
+          <span class="header-btn-txt"><small>Retours</small><strong>et commandes</strong></span>
+        </a>
+
+        <a class="header-btn cart-btn" href="#/panier">
+          <span class="cart-ico">
+            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.6"/><circle cx="17.5" cy="20" r="1.6"/><path d="M2.5 3.5h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h8.3a1.6 1.6 0 0 0 1.6-1.2l1.7-7.3H6"/></svg>
+            <span class="cart-badge" id="cart-badge" hidden>0</span>
+          </span>
+          <span class="header-btn-txt"><small>&nbsp;</small><strong>Panier</strong></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="catnav">
+    <div class="wrap catnav-in" id="catnav">
+      <a href="#/flash" class="catnav-flash">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z"/></svg>
+        Ventes flash
+      </a>
+      <a href="#/c/high-tech">High-tech</a>
+      <a href="#/c/informatique">Informatique</a>
+      <a href="#/c/mode">Mode</a>
+      <a href="#/c/maison">Maison</a>
+      <a href="#/c/livres">Livres</a>
+      <a href="#/c/jeux-loisirs">Jeux &amp; Loisirs</a>
+      <a href="#/c/sport">Sport</a>
+      <a href="#/bestsellers">Meilleures ventes</a>
+    </div>
+  </nav>
+
+  <main id="app" class="wrap"></main>
+
+  <footer class="footer">
+    <div class="reassurance">
+      <div class="wrap reassurance-in">
+        <div class="reassure">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h13v11h-13zM14.5 9h4l3 3.5V17h-7"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="18" cy="17.5" r="1.8"/></svg>
+          <div><strong>Livraison rapide</strong><span>Offerte dès 49&nbsp;€ d'achat</span></div>
+        </div>
+        <div class="reassure">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V7a8 8 0 0 1 16 0v2M9 14l2 2 4-4.5"/><path d="M3.5 9h17l-1 11.5h-15z"/></svg>
+          <div><strong>Retours gratuits</strong><span>Sous 30 jours, sans justification</span></div>
+        </div>
+        <div class="reassure">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.5v6c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10v-6l-8-3Z"/><path d="m8.8 12 2.2 2.2 4.2-4.7"/></svg>
+          <div><strong>Paiement sécurisé</strong><span>CB, PayPal, virement — 3D&nbsp;Secure</span></div>
+        </div>
+        <div class="reassure">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 14.6 9l6 .7-4.5 4 1.3 5.9-5.4-3.1-5.4 3.1 1.3-5.9-4.5-4 6-.7L12 3.5Z"/></svg>
+          <div><strong>Avis vérifiés</strong><span>Notés par de vrais acheteurs</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap footer-cols">
+      <div class="footer-col">
+        <h4>À propos de Panopli</h4>
+        <a href="#/apropos">Qui sommes-nous</a>
+        <a href="#/apropos">Nos engagements</a>
+        <a href="#/apropos">Presse</a>
+        <a href="#/apropos">Recrutement</a>
+      </div>
+      <div class="footer-col">
+        <h4>Aide</h4>
+        <a href="#/aide">Suivre ma commande</a>
+        <a href="#/aide">Livraison &amp; retours</a>
+        <a href="#/aide">Remboursements</a>
+        <a href="#/aide">Nous contacter</a>
+      </div>
+      <div class="footer-col">
+        <h4>Vendre sur Panopli</h4>
+        <a href="#/vendre">Ouvrir une boutique</a>
+        <a href="#/vendre">Espace vendeur</a>
+        <a href="#/vendre">Frais et commissions</a>
+        <a href="#/vendre">Logistique Panopli</a>
+      </div>
+      <div class="footer-col">
+        <h4>Paiement 100&nbsp;% sécurisé</h4>
+        <div class="pay-badges">
+          <span>CB</span><span>VISA</span><span>Mastercard</span><span>PayPal</span>
+        </div>
+        <h4 class="footer-col-gap">Une question&nbsp;?</h4>
+        <a href="#/aide">Du lundi au samedi, 9&nbsp;h – 19&nbsp;h</a>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <div class="wrap footer-legal-in">
+        <span>© 2026 Panopli SAS — Projet pédagogique NoSQL B3, aucune vente réelle</span>
+        <nav>
+          <a href="#/apropos">CGV</a>
+          <a href="#/apropos">Confidentialité</a>
+          <a href="#/apropos">Cookies</a>
+          <a href="#/apropos">Mentions légales</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

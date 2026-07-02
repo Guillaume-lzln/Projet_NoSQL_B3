@@ -1,0 +1,118 @@
+name: marketplace-nosql
+
+services:
+  # ── Base relationnelle : transactions, intégrité forte ──────────
+  postgres:
+    image: postgres:17
+    container_name: mk_postgres
+    environment:
+      POSTGRES_USER: marketplace
+      POSTGRES_PASSWORD: marketplacepass
+      POSTGRES_DB: marketplace
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Les scripts SQL sont exécutés automatiquement au premier démarrage
+      - ./seed/sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marketplace -d marketplace"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  # ── Base documents : catalogue produits au schéma variable ──────
+  mongo:
+    image: mongo:8
+    container_name: mk_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass123
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --eval 'db.adminCommand({ping: 1}).ok'"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # ── Clé-valeur en mémoire : paniers, cache, compteurs, files ────
+  redis:
+    image: redis:8
+    container_name: mk_redis
+    # AOF activé : la persistance de Redis est réelle et vérifiable
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "redispass123"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a redispass123 ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  # ── Graphe : achats, vues, recommandations ──────────────────────
+  neo4j:
+    image: neo4j:2025.06
+    container_name: mk_neo4j
+    environment:
+      NEO4J_AUTH: neo4j/neo4jpass123
+    ports:
+      - "7474:7474" # interface web (Neo4j Browser)
+      - "7687:7687" # protocole Bolt (driver applicatif)
+    volumes:
+      - neo4jdata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p neo4jpass123 'RETURN 1;'"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 40s
+
+  # ── Application support (API Express) ───────────────────────────
+  app:
+    build: ./app
+    container_name: mk_app
+    ports:
+      - "3000:3000"
+    environment: &app-env
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGUSER: marketplace
+      PGPASSWORD: marketplacepass
+      PGDATABASE: marketplace
+      MONGO_URL: mongodb://root:rootpass123@mongo:27017/?authSource=admin
+      MONGO_DB: marketplace
+      REDIS_URL: redis://:redispass123@redis:6379
+      NEO4J_URL: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: neo4jpass123
+    depends_on:
+      postgres: { condition: service_healthy }
+      mongo: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      neo4j: { condition: service_healthy }
+
+  # ── Seed : peuple MongoDB, Redis et Neo4j (PostgreSQL est peuplé
+  #    automatiquement par ./seed/sql au premier démarrage) ────────
+  #    Lancement : docker compose run --rm seed
+  seed:
+    build: ./app
+    container_name: mk_seed
+    profiles: ["seed"]
+    command: ["node", "src/seed/index.js"]
+    environment: *app-env
+    depends_on:
+      postgres: { condition: service_healthy }
+      mongo: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      neo4j: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  mongodata:
+  redisdata:
+  neo4jdata:
